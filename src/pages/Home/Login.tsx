@@ -1,4 +1,5 @@
-import { gql, useQuery } from '@apollo/client';
+import { gql, useQuery, useReactiveVar } from '@apollo/client';
+import examValue from '../../modules/exam';
 
 const GET_KAKAO_AUTH_URL = gql`
   query GetKakaoLoginUrl {
@@ -10,6 +11,9 @@ const GET_KAKAO_AUTH_URL = gql`
 
 function Login() {
   const { loading, error, data } = useQuery(GET_KAKAO_AUTH_URL);
+  const exam = useReactiveVar(examValue);
+  console.log('apollo 전역변수 test ==>', exam);
+  // examValue('state 값 변경');
 
   const handleKakaoLogin = () => {
     if (data && data.getKakaoLoginUrl) {
