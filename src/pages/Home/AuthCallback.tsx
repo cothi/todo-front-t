@@ -40,13 +40,11 @@ function AuthCallback() {
   }, [completeAuth, location]);
 
   if (loading) return <div>Loading...</div>;
-  console.log('errrr', error);
   if (error) return <div>Error: {error.message}</div>;
 
   return (
     <>
       <div>{message}</div>
-      <div>카카오 로그인 성공~!</div>
     </>
   );
 }
