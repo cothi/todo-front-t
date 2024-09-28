@@ -1,24 +1,24 @@
-// import { gql, useQuery } from "@apollo/client";
+import { gql, useQuery } from "@apollo/client";
 
-// const GET_KAKAO_AUTH_URL = gql`
-//   query GetKakaoAuthUrl {
-//     getKakaoAuthUrl {
-//       url
-//     }
-//   }
-// `;
+const GET_KAKAO_AUTH_URL = gql`
+  query GetKakaoLoginUrl {
+    getKakaoLoginUrl {
+      url
+    }
+  }
+`;
 
 function Home() {
-  //   const { loading, error, data } = useQuery(GET_KAKAO_AUTH_URL);
+  const { loading, error, data } = useQuery(GET_KAKAO_AUTH_URL);
 
-  //   const handleKakaoLogin = () => {
-  //     if (data && data.getKakaoAuthUrl) {
-  //       window.location.href = data.getKakaoAuthUrl.url;
-  //     }
-  //   };
+  const handleKakaoLogin = () => {
+    if (data && data.getKakaoLoginUrl) {
+      window.location.href = data.getKakaoLoginUrl.url;
+    }
+  };
 
-  //   if (loading) return <p>Loading...</p>;
-  //   if (error) return <p>Error: {error.message}</p>;
+  if (loading) return <p>Loading...</p>;
+  if (error) return <p>Error: {error.message}</p>;
 
   return (
     <>
@@ -35,28 +35,16 @@ function Home() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form action="#" method="POST" className="space-y-6">
-            투두깨비에 오신 것을 환영합니다!😄
-            <div>
-              <button
-                type="submit"
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-                // onClick={handleKakaoLogin}
-              >
-                KAKAO LOGIN
-              </button>
-            </div>
-          </form>
-
-          <p className="mt-10 text-center text-sm text-gray-500">
-            Not a member?{" "}
-            <a
-              href="#"
-              className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
+          투두깨비에 오신 것을 환영합니다!😄
+          <div>
+            <button
+              type="submit"
+              className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              onClick={handleKakaoLogin}
             >
-              Start a 14 day free trial
-            </a>
-          </p>
+              KAKAO LOGIN
+            </button>
+          </div>
         </div>
       </div>
     </>
