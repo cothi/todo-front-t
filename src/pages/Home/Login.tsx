@@ -11,8 +11,8 @@ const GET_KAKAO_AUTH_URL = gql`
 
 function Login() {
   const { loading, error, data } = useQuery(GET_KAKAO_AUTH_URL);
-  const exam = useReactiveVar(examValue);
-  console.log('apollo 전역변수 test ==>', exam);
+  // const exam = useReactiveVar(examValue);
+  // console.log('apollo 전역변수 test ==>', exam);
   // examValue('state 값 변경');
 
   const handleKakaoLogin = () => {
