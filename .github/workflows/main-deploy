@@ -1,0 +1,40 @@
+# This workflow will run tests using node and then publish a package to GitHub Packages when a release is created
+# For more information see: https://docs.github.com/en/actions/publishing-packages/publishing-nodejs-packages
+
+name: TODOKKAEBI MAIN DEPLOY
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22.4.0
+          cache: pnpm
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_KEY }}
+          aws-region: ${{ secrets.AWS_REGION }}
+      - name: Building Todokkaebi
+        env:
+          AWS_ENV: main
+          CI: false
+          VUE_APP_AWS_SSM_ACCESS_KEY: ${{ secrets.AWS_ACCESS_KEY }}
+          VUE_APP_AWS_SSM_SECRET_KEY: ${{ secrets.AWS_SECRET_KEY }}
+          VUE_APP_AWS_SSM_REGION: ${{ secrets.AWS_REGION }}
+        run: |
+          CI=false
+          pnpm install --no-frozen-lockfile
+          pnpm run build
+      - name: Deploying to S3 BUCKET
+        run: aws s3 sync ./build/ s3://${{ secrets.S3_REPO }} --delete --cache-control max-age=0
